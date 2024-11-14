@@ -130,8 +130,8 @@ function removeTrailingWhitespaces(value) {
  *   repeatString('', 3) => ''
  *   repeatString('abc', -2) => ''
  */
-function repeatString(/* str, times */) {
-  throw new Error('Not implemented');
+function repeatString(str, times) {
+  return str.repeat(Math.max(times, 0));
 }
 
 /**
@@ -146,8 +146,11 @@ function repeatString(/* str, times */) {
  *   removeFirstOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeFirstOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  const startIndex = str.indexOf(value);
+  if (startIndex < 0) return str;
+  const endIndex = startIndex + value.length;
+  return str.slice(0, startIndex) + str.slice(endIndex);
 }
 
 /**
