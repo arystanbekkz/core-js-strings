@@ -453,8 +453,8 @@ function unbracketTag(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -473,8 +473,22 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  return str
+    .split('')
+    .map((char) => {
+      const charCode = char.charCodeAt(0);
+      let basicCode;
+      if (charCode > 64 && charCode < 91) {
+        basicCode = 65;
+      }
+      if (charCode > 96 && charCode < 123) {
+        basicCode = 97;
+      }
+      const newCode = ((charCode - basicCode + 13) % 26) + basicCode;
+      return basicCode ? String.fromCharCode(newCode) : char;
+    })
+    .join('');
 }
 
 /**
@@ -501,8 +515,31 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const firstId = value.slice(0, value.length - 1);
+  const secondId = value.slice(-1);
+  const multipliers = {
+    '♣': 0,
+    '♦': 1,
+    '♥': 2,
+    '♠': 3,
+  };
+  const positions = {
+    A: 0,
+    2: 1,
+    3: 2,
+    4: 3,
+    5: 4,
+    6: 5,
+    7: 6,
+    8: 7,
+    9: 8,
+    10: 9,
+    J: 10,
+    Q: 11,
+    K: 12,
+  };
+  return positions[firstId] + multipliers[secondId] * 13;
 }
 
 module.exports = {
